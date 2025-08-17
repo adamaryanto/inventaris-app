@@ -3,6 +3,10 @@ import mysql from 'mysql2';
 import bcrypt from 'bcrypt';
 import cors from 'cors';
 import jwt from 'jsonwebtoken';
+import dotenv from 'dotenv';
+
+// Load environment variables
+dotenv.config();
 
 const app = express();
 const SECRET_KEY = 'rahasia-super-aman';
@@ -13,13 +17,16 @@ app.use(express.json());
 
 // Koneksi ke database menggunakan Pool
 const pool = mysql.createPool({
-  host: 'localhost',
-  user: 'inventaris_user',
-  password: 'AplikasiInventaris25!',
-  database: 'inventaris_pro',
+  host: process.env.DB_HOST || 'hopper.proxy.rlwy.net',
+  port: Number(process.env.DB_PORT || 3306),
+  user: process.env.DB_USER || 'root',
+  password: process.env.DB_PASSWORD || 'QDjzInhQuNsQLpWsQqAJWjgSFObbIyOc',
+  database: process.env.DB_NAME || 'railway',
   waitForConnections: true,
   connectionLimit: 10,
-  queueLimit: 0
+  queueLimit: 0,
+  // Enable SSL if specified (useful for some managed DBs)
+  ...(process.env.DB_SSL === 'true' ? { ssl: { rejectUnauthorized: true } } : {})
 });
 
 // Endpoint: Register
