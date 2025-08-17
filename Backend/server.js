@@ -14,8 +14,8 @@ app.use(express.json());
 // Koneksi ke database menggunakan Pool
 const pool = mysql.createPool({
   host: 'localhost',
-  user: 'root',
-  password: '',
+  user: 'inventaris_user',
+  password: 'AplikasiInventaris25!',
   database: 'inventaris_pro',
   waitForConnections: true,
   connectionLimit: 10,
@@ -83,7 +83,10 @@ app.post('/login', async (req, res) => {
     'SELECT * FROM users WHERE username = ? OR email = ?',
     [identifier, identifier],
     async (err, results) => {
-      if (err) return res.status(500).json({ message: 'Server error.' });
+      if (err) {
+        console.error("Login DB error:", err); // Tambahkan log error detail
+        return res.status(500).json({ message: 'Server error.' });
+      }
       if (results.length === 0) {
         return res.status(401).json({ message: 'User tidak ditemukan.' });
       }
@@ -351,7 +354,6 @@ app.put('/peminjaman/:id/tolak', (req, res) => {
   });
 });
 
-
 // Ambil total barang tersedia & jumlah barang hampir habis
 // Ambil statistik barang (tersedia, hampir habis, dan habis)
 app.get('/barang/statistik', async (req, res) => {
@@ -506,7 +508,6 @@ app.patch('/users/:id/role', async (req, res) => {
   }
 });
 
-
 // Endpoint: Hapus seorang pengguna berdasarkan ID
 app.delete('/users/:id', async (req, res) => {
   const { id } = req.params; // Ambil ID dari parameter URL
@@ -527,7 +528,6 @@ app.delete('/users/:id', async (req, res) => {
     res.status(500).json({ message: 'Gagal menghapus pengguna.' });
   }
 });
-
 
 // Endpoint: Menyetujui (mengonfirmasi) pengembalian barang
 app.patch('/peminjaman/:id/konfirmasi-kembali', async (req, res) => {
@@ -585,7 +585,6 @@ app.patch('/peminjaman/:id/konfirmasi-kembali', async (req, res) => {
     if (connection) connection.release();
   }
 });
-
 
 // Endpoint: Menolak konfirmasi pengembalian
 app.patch('/peminjaman/:id/tolak-kembali', async (req, res) => {
@@ -701,7 +700,6 @@ app.put('/peminjaman/:id/selesai', (req, res) => {
   });
 });
 
-
 // Endpoint: Ubah password pengguna
 app.patch('/users/:id/password', async (req, res) => {
   const { id } = req.params;
@@ -779,7 +777,6 @@ app.get('/users/:userId/peminjaman/statistik', async (req, res) => {
   }
 });
 
-
 // Endpoint: Mengambil semua status pengajuan untuk satu user
 app.get('/users/:userId/peminjaman', async (req, res) => {
   const { userId } = req.params;
@@ -849,8 +846,6 @@ app.put('/users/:id', async (req, res) => {
   }
 });
 
-
-
 // Endpoint: Mengambil detail lengkap profil seorang pengguna
 app.get('/users/:id/detail', async (req, res) => {
   const { id } = req.params;
@@ -882,7 +877,6 @@ app.get('/users/:id/detail', async (req, res) => {
     res.status(500).json({ message: 'Gagal mengambil detail profil.' });
   }
 });
-
 
 // Start server
 app.listen(5000, () => {

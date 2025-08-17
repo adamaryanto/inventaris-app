@@ -2,7 +2,7 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Login from "./Login";
 
 import { Toaster } from "sonner";
-import LayoutAdmin from "./Component/LayoutAdmin";
+import LayoutAdmin from "./component/LayoutAdmin"
 import DashboardAdmin from "./Page Admin/DashboardAdmin";
 import DataBarang from "./Page Admin/DataBarang";
 import PermintaanPeminjamanAdmin from "./Page Admin/PermintaanPeminjamanAdmin";
@@ -11,8 +11,8 @@ import RiwayatPeminjamanAdmin from "./Page Admin/RiwayatPeminjamanAdmin";
 import ManajemenUser from "./Page Admin/ManajemenUser";
 import Laporan from "./Page Admin/Laporan";
 import ProfileAdmin from "./Page Admin/ProfileAdmin";
-import LayoutUser from "./Component/LayoutUser";
-import DashboardUser from "./PageUser.jsx/DashboardUSer";
+import LayoutUser from "./component/LayoutUser";
+import DashboardUser from "./PageUser.jsx/DashboardUser";
 import PengajuanUser from "./PageUser.jsx/PengajuanUser";
 import PengembalianBarangUser from "./PageUser.jsx/PengembalianBarangUser";
 import RiwayatPeminjamanUser from "./PageUser.jsx/RiwayatPeminjamanUser";
